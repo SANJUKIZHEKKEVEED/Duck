@@ -21,6 +21,9 @@ from langchain.prompts import PromptTemplate
 
 # Create a Streamlit app
 st.title("🦣Doc BOT")
+# Relative paths to the 'docs' and 'data' folders in the GitHub repository
+DOCS_DIRECTORY = "docs"
+PERSIST_DIRECTORY = "data"
 
 # Create a place to input the OpenAI API Key
 openai_api_key = st.text_input("Enter your OpenAI API Key", type="password")
