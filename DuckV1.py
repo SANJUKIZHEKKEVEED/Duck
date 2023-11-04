@@ -83,15 +83,4 @@ if openai_api_key:
                 chat_history.append((query, result["answer"]))
 
 
-# In[1]:
-
-
-import os
-os.chdir(r"C:/Users/Sanju/LangChain/")
-
-
-# In[ ]:
-
-
-
 
