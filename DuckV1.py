@@ -1,11 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 import os
 import sys
+import sqlite3
 import streamlit as st
 from langchain.document_loaders import PyPDFLoader
 from langchain.document_loaders import Docx2txtLoader
@@ -21,9 +16,10 @@ from langchain.prompts import PromptTemplate
 
 # Create a Streamlit app
 st.title("🦣Doc BOT")
+
 # Relative paths to the 'docs' and 'data' folders in the GitHub repository
 DOCS_DIRECTORY = "docs"
-PERSIST_DIRECTORY = "data"
+PERSIST_DIRECTORY = "db"
 
 # Create a place to input the OpenAI API Key
 openai_api_key = st.text_input("Enter your OpenAI API Key", type="password")
@@ -35,30 +31,28 @@ if openai_api_key:
     # Set the OpenAI API key if it has been provided
     os.environ['OPENAI_API_KEY'] = openai_api_key
 
-    for file in os.listdir("docs"):
+    for file in os.listdir(DOCS_DIRECTORY):
         if file.endswith(".pdf"):
-            pdf_path = "./docs/" + file
+            pdf_path = os.path.join(DOCS_DIRECTORY, file)
             loader = PyPDFLoader(pdf_path)
             documents.extend(loader.load())
         elif file.endswith('.docx') or file.endswith('.doc'):
-            doc_path = "./docs/" + file
+            doc_path = os.path.join(DOCS_DIRECTORY, file)
             loader = Docx2txtLoader(doc_path)
             documents.extend(loader.load())
         elif file.endswith('.txt'):
-            text_path = "./docs/" + file
+            text_path = os.path.join(DOCS_DIRECTORY, file)
             loader = TextLoader(text_path)
             documents.extend(loader.load())
 
-    text_splitter = CharacterTextSplitter(chunk_size=2000, chunk_overlap=10)
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=10)
     documents = text_splitter.split_documents(documents)
 
+    # Remove the invalid keyword argument
     embedding = OpenAIEmbeddings()
 
-    # With the model_name parameter passed to the model_kwargs dictionary
-    embedding = OpenAIEmbeddings(model_kwargs={"model_name": "text-embedding-babbage"})
-
     # Create the vector database
-    vectordb = Chroma.from_documents(documents, embedding=embedding, persist_directory="./data")
+    vectordb = Chroma.from_documents(documents, embedding=embedding, persist_directory=PERSIST_DIRECTORY)
     vectordb.persist()
 
     # Create the chat model
@@ -81,6 +75,3 @@ if openai_api_key:
                 result = pdf_qa({"question": query, "chat_history": chat_history})
                 st.write("Answer:", result["answer"])
                 chat_history.append((query, result["answer"]))
-
-
-
