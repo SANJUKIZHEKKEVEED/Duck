@@ -1,8 +1,0 @@
-20. In the previous videos, we have explained the process of Purchase requisitions and Purchase Enquiries using AMC Athena.  This training video will focus on creation and management of Purchase Orders.
-21. The buyers can create purchase orders once they receive quotations from the vendors, finalized the best price and are ready to place the order.  Also, the purchasing module in Athena lets them to create a local purchase orders for locally provisioned parts as well as Purchase contracts and blanket Purchase agreements.
-The purchase order approval workflow is BPML standard and can be setup based on the business requirements of the organization.  Different approval hierarchy and approvers can be setup for different types of Purchase Orders.
-
-22. The integrated analytic-capability with configurable dashboards and infolets provides a birds eye view of purchasing function.  The user can navigate to the required purchase order directly from the dashboard or using the search screen.
-
-25. Approved purchase orders can be automatically sent to the vendors by email or Electronic Data Interchange gateways.  When the vendors deliver the part, it can be recorded as a stock receipt and  invoices can be recorded for payment.  
-Let me conclude the training here.  Thank you for watching.
